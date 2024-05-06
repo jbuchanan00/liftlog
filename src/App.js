@@ -1,9 +1,11 @@
+import WorkoutForm from './components/workoutForm';
+
 function App() {
 
   
   return (
     <div className="App">
-      Hello World
+      <WorkoutForm/>
     </div>
   );
 }
