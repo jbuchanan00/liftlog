@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 const WorkoutForm = () => {
@@ -10,7 +10,7 @@ const WorkoutForm = () => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if(name != 'workoutName'){
+        if(name !== 'workoutName'){
             setFormData(prevState => ({
                 ...prevState,
                 [name]: parseInt(value, 10)
@@ -32,6 +32,16 @@ const WorkoutForm = () => {
                 console.error('There was an error: ', error);
             })
     };
+
+    useEffect(() => {
+        axios.get('/')
+            .then(response => {
+                console.log(`this is the response ${response.status}`)
+            })
+            .catch(error => {
+                console.error(`There was an error ${error}`)
+            })
+    })
 
     return (
         <form onSubmit={handleSubmit}>
