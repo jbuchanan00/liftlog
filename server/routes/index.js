@@ -4,7 +4,7 @@ const db = require('../db');
 
 
 
-router.get('/', async (req, res, next) => {
+router.get('/exercises', async (req, res, next) => {
     try {
         const result = await db.query('SELECT * FROM exercise');
         console.log(result)
@@ -13,8 +13,6 @@ router.get('/', async (req, res, next) => {
         console.error(err);
         res.status(500).send('Internal Server Error');
       }
-    console.log(req.body);
-    res.redirect('/');
 })
 
 module.exports = router;

@@ -34,9 +34,9 @@ const WorkoutForm = () => {
     };
 
     useEffect(() => {
-        axios.get('/')
+        axios.get('/exercises')
             .then(response => {
-                console.log(`this is the response ${response.status}`)
+                console.log(`this is the response ${JSON.stringify(response.data)}`)
             })
             .catch(error => {
                 console.error(`There was an error ${error}`)
