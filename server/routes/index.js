@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../db');
+var queries = require('../../db_queries/exercises/get_excerises')
 
 
 
 router.get('/exercises', async (req, res, next) => {
     try {
-        const result = await db.query('SELECT * FROM exercise');
+        console.log(queries.get_all);
+        const result = await db.query(queries.get_by_id(1));
         console.log(result)
         res.json(result.rows);
       } catch (err) {

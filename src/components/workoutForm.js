@@ -60,14 +60,17 @@ const WorkoutForm = () => {
                     name='numSets'
                     onChange={handleChange}/>
             </div>
-            <div>
-                <label htmlFor='numReps'>Reps per Set: </label>
-                <input type='number'
-                    id="repsPerSet"
-                    name='numReps'
-                    value={formData.reps}
-                    onChange={handleChange}/>
-            </div>
+            {/* {for (let i = 0; i < formData.numSets; i++){
+                <div>
+                    <label htmlFor='numReps'>Reps per Set: </label>
+                    <input type='number'
+                        id="repsPerSet"
+                        name='numReps'
+                        value={formData.reps}
+                        onChange={handleChange}/>
+                </div>
+            }} */}
+            
             <button type='submit'>Submit</button>
         </form>
     )
