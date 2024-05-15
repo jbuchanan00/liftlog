@@ -1,30 +1,50 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import axios from 'axios';
 
 const WorkoutForm = () => {
-    const [formData, setFormData] = useState({
-        workoutName: '',
-        numSets: 0,
-        numReps: 0
-    })
+    const exerciseInput = useRef(null);
+    const [numOfFields, setNumOfFields] = useState(0);
+    const [repFields, setRepFields] = useState([]);
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        if(name !== 'workoutName'){
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: parseInt(value, 10)
-            }))
-        }else{
-            setFormData({...formData, [e.target.name]: e.target.value});
+    const renderFields = (e) => {
+        const fields = [];
+        for(let i = 0; i < numOfFields; i++){
+            fields.push(
+                <div>
+                    <label htmlFor={`rep${i}`} style={{display:'hidden'}}></label> 
+                    <input
+                        key={i}
+                        id={`rep${i}`}
+                        name={`rep${i}`}
+                        type="number"
+                        onChange={(e) => handleRepChange(i, e)}/>
+                </div>
+            );
         }
-        
+        return fields;
+    }
+
+    const handleSetChange = (e) => {
+        setNumOfFields(e.target.value);
+    }
+
+    const handleRepChange = (i, e) => {
+        console.log(e)
+        const repsCopy = [...repFields];
+        repsCopy[i] = e.target.value;
+        setRepFields(repsCopy);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submitted:")
-        axios.post('/api/submitworkout', formData)
+        const formData = {
+            exercise: exerciseInput.current.value,
+            sets: numOfFields,
+            reps: repFields
+        }
+        
+        console.log("Submitted: ", {formData})
+        axios.post('/api/submitworkout', {formData})
             .then(response => {
                 console.log('Submitted successfully')
             })
@@ -48,28 +68,18 @@ const WorkoutForm = () => {
             <div>
                 <label htmlFor='workoutName'>Workout Name: </label>
                 <input type='text' id='workoutName' 
-                    value={formData.workoutName}
                     name='workoutName' 
-                    onChange={handleChange}/>
+                    ref={exerciseInput}/>
             </div>
             <div>
                 <label htmlFor='numSets'>Number of Sets: </label>
                 <input type='number'
                     id='numSets'
-                    value={formData.sets}
+                    value={numOfFields}
                     name='numSets'
-                    onChange={handleChange}/>
+                    onChange={handleSetChange}/>
             </div>
-            {/* {for (let i = 0; i < formData.numSets; i++){
-                <div>
-                    <label htmlFor='numReps'>Reps per Set: </label>
-                    <input type='number'
-                        id="repsPerSet"
-                        name='numReps'
-                        value={formData.reps}
-                        onChange={handleChange}/>
-                </div>
-            }} */}
+            {renderFields()}
             
             <button type='submit'>Submit</button>
         </form>
