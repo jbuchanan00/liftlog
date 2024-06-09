@@ -1,3 +1,11 @@
+
+Simple app to track exercises
+
+To run application development go into server folder and run nodemon app.
+Hosted on port 8080
+
+React front-end, Nodejs back-end, Postgresql database
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
