@@ -1,13 +1,27 @@
-import React from 'react';
+import { React, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/addWorkout.css"
+import "../styles/addWorkout.css";
+import AddWorkoutForm from "./forms/addWorkoutForm";
 
 const AddWorkout = () => {
-    return(
+  const [modalView, setModalView] = useState(false);
+
+  const handleModalClick = (e) => {
+    setModalView(!modalView);
+  };
+
+  return (
+    <div>
+      {modalView ? (
         <div>
-            <a className='button' href='/'><i class="bi bi-plus"></i></a>
+          <AddWorkoutForm modalControl={setModalView} />
         </div>
-    )
-}
+      ) : null}
+      <button onClick={handleModalClick}>
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+  );
+};
 
 export default AddWorkout;
